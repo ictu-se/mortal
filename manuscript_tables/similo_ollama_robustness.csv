@@ -1,0 +1,10 @@
+model,perturbation,original_accuracy,perturbed_accuracy,accuracy_drop,consistency_rate,metamorphic_violation_rate_proxy
+qwen2.5-coder:1.5b,paraphrase,0.3176,0.3429,-0.0253,,
+qwen2.5-coder:1.5b,noise,0.3176,0.2927,0.0249,,
+qwen2.5-coder:1.5b,cross_variant,,,,0.8126,0.1642
+qwen2.5-coder:14b,paraphrase,0.8972,0.8814,0.0158,,
+qwen2.5-coder:14b,noise,0.8972,0.9013,-0.0041,,
+qwen2.5-coder:14b,cross_variant,,,,0.9606,0.0373
+qwen2.5-coder:7b,paraphrase,0.7102,0.6625,0.0477,,
+qwen2.5-coder:7b,noise,0.7102,0.6439,0.0663,,
+qwen2.5-coder:7b,cross_variant,,,,0.8657,0.1244

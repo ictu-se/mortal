@@ -1,0 +1,4 @@
+model_a,model_b,variant,metric,mean_a,mean_b,delta_a_minus_b,p_value,holm_p
+qwen2.5-coder:14b,qwen2.5-coder:7b,original,accuracy,0.8972,0.7102,0.187,0.0,0.0
+qwen2.5-coder:7b,qwen2.5-coder:1.5b,original,accuracy,0.7102,0.3176,0.3926,0.0,0.0
+qwen2.5-coder:14b,qwen2.5-coder:1.5b,original,accuracy,0.8972,0.3176,0.5796,0.0,0.0

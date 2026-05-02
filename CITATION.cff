@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the MORTAL manuscript."
+title: "MORTAL: Multi-Oracle Robustness Testing as a Quality Gate for LLM-Generated Software Artifacts"
+authors:
+  - family-names: "Nguyen"
+    given-names: "The-Vinh"
+    email: "vinhnt@ictu.edu.vn"
+year: 2026
+repository-code: "https://github.com/ictu-se/mortal"
+license: "MIT"

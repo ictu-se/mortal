@@ -1,0 +1,10 @@
+model_a,model_b,variant,metric,mean_a,mean_b,delta_a_minus_b,a12_a_greater_b,p_value,holm_p
+qwen2.5-coder:14b,qwen2.5-coder:7b,original,assertion_success,0.285,0.2267,0.0583,0.5598,1.0,1.0
+qwen2.5-coder:14b,qwen2.5-coder:7b,original,full_pass,0.0567,0.0283,0.0283,0.5142,0.014985,0.119883
+qwen2.5-coder:14b,qwen2.5-coder:7b,original,latency_ms,11124.4691,4308.3255,6816.1436,0.9246,1.0,1.0
+qwen2.5-coder:7b,qwen2.5-coder:1.5b,original,assertion_success,0.2267,0.1039,0.1228,0.6442,1.0,1.0
+qwen2.5-coder:7b,qwen2.5-coder:1.5b,original,full_pass,0.0283,0.0183,0.01,0.505,0.251234,1.0
+qwen2.5-coder:7b,qwen2.5-coder:1.5b,original,latency_ms,4308.3255,3661.1123,647.2133,0.7701,1.0,1.0
+qwen2.5-coder:14b,qwen2.5-coder:1.5b,original,assertion_success,0.285,0.1039,0.1811,0.7071,1.0,1.0
+qwen2.5-coder:14b,qwen2.5-coder:1.5b,original,full_pass,0.0567,0.0183,0.0383,0.5192,0.000474,0.00427
+qwen2.5-coder:14b,qwen2.5-coder:1.5b,original,latency_ms,11124.4691,3661.1123,7463.3569,0.9522,1.0,1.0

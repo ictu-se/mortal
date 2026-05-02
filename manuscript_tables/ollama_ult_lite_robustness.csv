@@ -1,0 +1,10 @@
+model,perturbation,original_assertion_success,perturbed_assertion_success,assertion_success_drop,original_full_pass_rate,perturbed_full_pass_rate,full_pass_drop,consistency_rate,metamorphic_violation_rate_proxy,same_repeat_agreement_rate
+qwen2.5-coder:1.5b,paraphrase,0.1039,0.0633,0.0406,0.0183,0.0117,0.0067,,,
+qwen2.5-coder:1.5b,noise,0.1039,0.1040,-0.0000,0.0183,0.0167,0.0017,,,
+qwen2.5-coder:14b,paraphrase,0.2850,0.2657,0.0193,0.0567,0.0517,0.0050,,,
+qwen2.5-coder:14b,noise,0.2850,0.2750,0.0100,0.0567,0.0517,0.0050,,,
+qwen2.5-coder:7b,paraphrase,0.2267,0.2251,0.0016,0.0283,0.0283,0.0000,,,
+qwen2.5-coder:7b,noise,0.2267,0.2269,-0.0002,0.0283,0.0283,0.0000,,,
+qwen2.5-coder:1.5b,cross_variant,,,,,,,0.9103,0.2250,0.9850
+qwen2.5-coder:14b,cross_variant,,,,,,,0.8990,0.1350,0.9717
+qwen2.5-coder:7b,cross_variant,,,,,,,0.8969,0.1800,0.9783
