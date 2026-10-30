@@ -28,6 +28,8 @@ outputs can be regenerated with `make analyze`; empirical displays with
 - `pilot_outputs/ollama_ult_lite/ollama_ult_lite_synthetic_mutants.csv`
 - `pilot_outputs/similo_ollama/similo_ollama_raw.csv`
 - `requirements.txt`
+- `results/displays/Fig1.eps`
+- `results/displays/Fig2.eps`
 - `results/displays/cost_gate.pdf`
 - `results/displays/paired_drops.pdf`
 - `results/family_extension/design.json`
@@ -40,6 +42,7 @@ outputs can be regenerated with `make analyze`; empirical displays with
 - `results/family_extension/responses.jsonl`
 - `results/quality_gates/extension_evaluated.csv`
 - `results/quality_gates/extension_generation_diagnostics.csv`
+- `results/quality_gates/historical_additional_insights.csv`
 - `results/quality_gates/historical_case_decisions.csv`
 - `results/quality_gates/historical_cost_gate.csv`
 - `results/quality_gates/historical_gate_retention.csv`

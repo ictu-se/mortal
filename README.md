@@ -49,7 +49,7 @@ make displays
 `make analyze` uses the retained, response-hash-checked oracle evaluations. It
 reproduces the historical and matched summary tables, cluster bootstrap
 intervals, paired probe differences, case-level gate decisions, held-out repetition selection, and budget
-retention without downloading models or benchmarks. The bootstrap uses 4,000
+retention without downloading models or benchmarks. Additional summaries separate distinct task–wrapper detections from repeated kills and report generation time per killed pair and tokens per correct output. A token ratio is undefined if any scheduled call lacks a positive backend token total; 19 original ULT calls from Qwen 1.5B have this limitation. The bootstrap uses 4,000
 resamples with seed 20261029, clustering ULT observations by task and Similo
 observations by application. Matched outputs contain original-only summaries
 and repeat stability, with no inferred nine-condition gate.
@@ -58,7 +58,7 @@ and repeat stability, with no inferred nine-condition gate.
 `results/displays/`. Their source measurements are the CSV analysis outputs
 under `results/quality_gates/`. The table fragments are generated locally;
 manuscript sources, manuscript PDFs, and correspondence are not repository
-contents.
+contents. Three editable table fragments combine related outcomes and omit constant columns. Two empirical figures are exported as PDF and EPS with embedded fonts, a consistent blue palette, and marker or line patterns that also distinguish series.
 
 `make historical` reproduces only the 27,108-call historical analysis.
 

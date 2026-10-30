@@ -1,0 +1,7 @@
+domain,model,calls,correct,unreported_token_calls,reported_tokens,tokens_per_correct,seconds_per_killed_pair,distinct_mutants_detected,distinct_mutants_scheduled
+similo,qwen2.5-coder:1.5b,2412,766,0,11731371,15315.105744125327,,,
+similo,qwen2.5-coder:14b,2412,2164,0,11692791,5403.323012939002,,,
+similo,qwen2.5-coder:7b,2412,1713,0,11695435,6827.457676590777,,,
+ult,qwen2.5-coder:1.5b,600,11,19,375211,,7.707604771929824,132.0,600.0
+ult,qwen2.5-coder:14b,600,34,0,432752,12728.0,7.4577446592178775,329.0,600.0
+ult,qwen2.5-coder:7b,600,17,0,415212,24424.235294117647,3.6614664589235133,268.0,600.0

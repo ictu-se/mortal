@@ -231,6 +231,28 @@ def held_out_replay(data, out):
     pd.DataFrame(rows).to_csv(out / 'historical_holdout.csv', index=False)
 
 
+def additional_insights(data, out):
+    """Report distinct mutant coverage and generation-cost boundaries."""
+    mutation = pd.read_csv(ROOT / 'pilot_outputs/ollama_ult_lite/ollama_ult_lite_mutation_detection_raw.csv')
+    rows = []
+    for (domain, model), g in data[data.variant == 'original'].groupby(['domain', 'model']):
+        tokens = pd.to_numeric(g.prompt_eval_count, errors='coerce') + pd.to_numeric(g.eval_count, errors='coerce')
+        missing = int((tokens.isna() | (tokens == 0)).sum())
+        correct = int(g.correct.sum())
+        killed = int(g.mutants_killed.sum())
+        unique = 0
+        if domain == 'ult':
+            m = mutation[(mutation.model == model) & (mutation.variant == 'original')]
+            unique = int(m.groupby(['task_id', 'mutant_id']).killed.max().sum())
+        rows.append(dict(domain=domain, model=model, calls=len(g), correct=correct,
+                         unreported_token_calls=missing, reported_tokens=int(tokens.sum()),
+                         tokens_per_correct=tokens.sum()/correct if correct and not missing else float('nan'),
+                         seconds_per_killed_pair=g.client_elapsed_ms.sum()/1000/killed if killed else float('nan'),
+                         distinct_mutants_detected=unique if domain == 'ult' else float('nan'),
+                         distinct_mutants_scheduled=g.case_id.nunique()*3 if domain == 'ult' else float('nan')))
+    pd.DataFrame(rows).to_csv(out/'historical_additional_insights.csv', index=False)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--datasets', type=Path, default=ROOT / 'reproduction_datasets')
@@ -244,6 +266,7 @@ def main():
     assert set(data.variant) == set(VARIANTS) and set(data['repeat']) == {0, 1, 2}
     assert set(data.groupby(['domain', 'model', 'case_id']).size()) == {9}
     summarize(data, out, 'historical')
+    additional_insights(data, out)
     held_out_replay(data, out)
     if not args.historical_only:
         new = extension(args)
