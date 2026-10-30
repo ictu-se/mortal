@@ -1,0 +1,13 @@
+domain,model,policy,cases,selected_cases,held_out_pass,held_out_fail,selection_fraction,conditional_success
+similo,qwen2.5-coder:1.5b,schema_only,804,740,161,579,0.9203980099502488,0.21756756756756757
+similo,qwen2.5-coder:1.5b,joint,804,141,121,20,0.17537313432835822,0.8581560283687943
+similo,qwen2.5-coder:14b,schema_only,804,804,702,102,1.0,0.8731343283582089
+similo,qwen2.5-coder:14b,joint,804,697,697,0,0.8669154228855721,1.0
+similo,qwen2.5-coder:7b,schema_only,804,804,481,323,1.0,0.5982587064676617
+similo,qwen2.5-coder:7b,joint,804,468,462,6,0.582089552238806,0.9871794871794872
+ult,qwen2.5-coder:1.5b,schema_only,200,90,2,88,0.45,0.022222222222222223
+ult,qwen2.5-coder:1.5b,joint,200,2,2,0,0.01,1.0
+ult,qwen2.5-coder:14b,schema_only,200,200,6,194,1.0,0.03
+ult,qwen2.5-coder:14b,joint,200,8,6,2,0.04,0.75
+ult,qwen2.5-coder:7b,schema_only,200,197,3,194,0.985,0.015228426395939087
+ult,qwen2.5-coder:7b,joint,200,4,3,1,0.02,0.75

@@ -1,0 +1,34 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.9.6",
+  "version": {
+    "version": "0.34.4"
+  },
+  "tags": {
+    "models": [
+      {
+        "name": "deepseek-coder:6.7b",
+        "model": "deepseek-coder:6.7b",
+        "modified_at": "2026-05-26T23:34:21.665363979+07:00",
+        "size": 3827834503,
+        "digest": "ce298d984115b93bb1b191b47fee6b39e4e9fbd5f18e651c02f9fa74e0edcd13",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "llama",
+          "families": [
+            "llama"
+          ],
+          "parameter_size": "7B",
+          "quantization_level": "Q4_0",
+          "context_length": 16384,
+          "embedding_length": 4096
+        },
+        "capabilities": [
+          "completion"
+        ]
+      }
+    ]
+  },
+  "hardware": "Hardware:\n\n    Hardware Overview:\n\n      Model Name: MacBook Pro\n      Model Identifier: Mac16,5\n      Model Number: MX313SA/A\n      Chip: Apple M4 Max\n      Total Number of Cores: 16 (12 Performance and 4 Efficiency)\n      Memory: 48 GB\n      System Firmware Version: 18000.161.10\n      OS Loader Version: 18000.161.10\n      Activation Lock Status: Enabled\n"
+}

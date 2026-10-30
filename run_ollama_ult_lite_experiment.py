@@ -254,7 +254,10 @@ def markdown_table(rows: list[dict[str, Any]]) -> str:
 
 
 def main() -> None:
+    global DATA, OUT
     parser = argparse.ArgumentParser()
+    parser.add_argument('--datasets', type=Path, default=DATA)
+    parser.add_argument('--output', type=Path, default=BASE / 'results/reruns/ult')
     parser.add_argument("--model", default="qwen2.5-coder:1.5b")
     parser.add_argument(
         "--models",
@@ -268,6 +271,8 @@ def main() -> None:
     parser.add_argument("--request-timeout", type=float, default=30.0)
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
+    DATA, OUT = args.datasets, args.output
+    OUT.mkdir(parents=True, exist_ok=True)
 
     tasks = load_tasks(args.limit)
     raw_path = OUT / "ollama_ult_lite_raw.csv"

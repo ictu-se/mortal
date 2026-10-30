@@ -532,7 +532,10 @@ def run(args: argparse.Namespace) -> None:
 
 
 def main() -> None:
+    global DATA, OUT, RAW, DRY_RUN
     parser = argparse.ArgumentParser()
+    parser.add_argument('--datasets', type=Path, default=BASE / 'reproduction_datasets')
+    parser.add_argument('--output', type=Path, default=BASE / 'results/reruns/similo')
     parser.add_argument("--limit", type=int, default=0, help="0 means all cases")
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--top-k", type=int, default=50)
@@ -544,6 +547,9 @@ def main() -> None:
     parser.add_argument("--pull", action="store_true")
     parser.add_argument("--progress-every", type=int, default=25)
     args = parser.parse_args()
+    DATA, OUT = args.datasets / 'SimiloLLM', args.output
+    RAW, DRY_RUN = OUT / 'similo_ollama_raw.csv', OUT / 'similo_dry_run_cases.csv'
+    OUT.mkdir(parents=True, exist_ok=True)
     run(args)
 
 

@@ -1,0 +1,8 @@
+{
+  "reason": "Runtime feasibility measured during acquisition; primary second-family replication restricted to original prompts with three repetitions per case. Case sampling unchanged. No new-family outcome analysis had been performed.",
+  "primary_calls": 600,
+  "original_design_calls": 1800,
+  "completed_at_amendment": 76,
+  "completed_original": 27,
+  "exploratory_probes_retained": 49
+}

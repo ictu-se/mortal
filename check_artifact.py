@@ -1,60 +1,69 @@
 #!/usr/bin/env python3
-"""Lightweight structural checks for the MORTAL artifact."""
-
-from __future__ import annotations
-
+"""Verify retained evidence, design coverage, and oracle-cache provenance."""
+import argparse
 import csv
+import hashlib
+import json
+from collections import Counter
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parent
 
-REQUIRED_FILES = [
-    "README.md",
-    "requirements.txt",
-    "run_ollama_ult_lite_experiment.py",
-    "run_similo_ollama_experiment.py",
-    "analyze_ollama_ult_lite_metrics.py",
-    "analyze_ollama_mutation_detection.py",
-    "analyze_q1_readiness_stats.py",
-    "analyze_similo_ollama_results.py",
-    "build_cross_domain_evidence.py",
-    "pilot_outputs/ollama_ult_lite/ollama_ult_lite_raw.csv",
-    "pilot_outputs/ollama_ult_lite/ollama_ult_lite_extended_metrics.csv",
-    "pilot_outputs/ollama_ult_lite/ollama_ult_lite_mutation_detection_summary.csv",
-    "pilot_outputs/similo_ollama/similo_ollama_raw.csv",
-    "pilot_outputs/similo_ollama/similo_ollama_summary.csv",
-]
+
+def rows(path):
+    with (ROOT / path).open(newline='') as handle:
+        return list(csv.DictReader(handle))
 
 
-def require(path: str) -> Path:
-    file_path = ROOT / path
-    if not file_path.exists():
-        raise SystemExit(f"Missing required file: {path}")
-    return file_path
+def check():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--historical-only', action='store_true')
+    args = parser.parse_args()
+    for path, expected, case in [
+        ('pilot_outputs/ollama_ult_lite/ollama_ult_lite_raw.csv', 5400, 'task_id'),
+        ('pilot_outputs/similo_ollama/similo_ollama_raw.csv', 21708, 'case_id')]:
+        data = rows(path)
+        assert len(data) == expected, (path, len(data))
+        keys = [(r['model'], r[case], r['variant'], r['repeat']) for r in data]
+        assert len(keys) == len(set(keys)), 'Duplicate observation'
+        assert set(Counter((r['model'], r[case]) for r in data).values()) == {9}
+        assert {r['repeat'] for r in data} == {'0', '1', '2'}
+        assert {r['variant'] for r in data} == {'original', 'paraphrase', 'noise'}
+    mutants = rows('pilot_outputs/ollama_ult_lite/ollama_ult_lite_synthetic_mutants.csv')
+    assert len(mutants) == 600 and len({r['mutant_id'] for r in mutants}) == 600
+    mutation = rows('pilot_outputs/ollama_ult_lite/ollama_ult_lite_mutation_detection_raw.csv')
+    assert len(mutation) == 14874
+    assert {r['mutant_id'] for r in mutation} <= {r['mutant_id'] for r in mutants}
+    assert {r['killed'] for r in mutation} <= {'0', '1'}
+    if not args.historical_only:
+        directory = ROOT / 'results/family_extension'
+        design = json.loads((directory / 'design.json').read_text())
+        raw = [json.loads(line) for line in (directory / 'responses.jsonl').read_text().splitlines()]
+        def key(record):
+            return tuple(record[k] for k in ['domain', 'case_id', 'variant', 'repeat'])
+        assert len(raw) == len({key(r) for r in raw}), 'Duplicate acquired response'
+        expected = {(domain, case, variant, repeat)
+                    for domain, field in [('ult', 'ult_ids'), ('similo', 'similo_ids')]
+                    for case in design[field] for variant in design['variants'] for repeat in range(3)}
+        primary = {key(r): r for r in raw if r['variant'] in design['variants']}
+        assert set(primary) == expected and len(primary) == design['planned_calls'] == 600
+        amendment = json.loads((directory / 'design_amendment.json').read_text())
+        assert len(raw) - len(primary) == amendment['exploratory_probes_retained'] == 49
+        evaluated = [json.loads(line) for line in (directory / 'evaluated.jsonl').read_text().splitlines()]
+        assert len(evaluated) == len(expected) and {key(r) for r in evaluated} == expected
+        for record in evaluated:
+            response = primary[key(record)]['result'].get('response', '')
+            assert record['response_sha256'] == hashlib.sha256(response.encode()).hexdigest()
+            assert record['fault_pass'] <= record['artifact_pass'] <= record['correct']
+            assert record['mutants_killed'] <= record['mutants_evaluated']
+        print('Verified 600 primary and 49 exploratory second-family responses; cache hashes agree.')
+    manifest = ROOT / 'SHA256SUMS'
+    if manifest.exists():
+        for line in manifest.read_text().splitlines():
+            digest, path = line.split('  ', 1)
+            assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == digest, path
+    print('Verified 27,108 historical calls, 600 mutants, and 14,874 mutation evaluations.')
 
 
-def count_rows(path: Path) -> int:
-    with path.open(encoding="utf-8", newline="") as handle:
-        return sum(1 for _ in csv.DictReader(handle))
-
-
-def main() -> None:
-    for path in REQUIRED_FILES:
-        require(path)
-
-    ult_rows = count_rows(ROOT / "pilot_outputs/ollama_ult_lite/ollama_ult_lite_raw.csv")
-    similo_rows = count_rows(ROOT / "pilot_outputs/similo_ollama/similo_ollama_raw.csv")
-    if ult_rows != 5400:
-        raise SystemExit(f"Unexpected ULT raw row count: {ult_rows} (expected 5400)")
-    if similo_rows != 21708:
-        raise SystemExit(f"Unexpected Similo raw row count: {similo_rows} (expected 21708)")
-
-    print("Artifact check passed.")
-    print(f"ULT Lite raw rows: {ult_rows}")
-    print(f"SimiloLLM raw rows: {similo_rows}")
-
-
-if __name__ == "__main__":
-    main()
-
+if __name__ == '__main__':
+    check()

@@ -1,0 +1,9 @@
+domain,model,variant,cases,stable_pass,stable_fail,mixed
+similo,deepseek-coder:6.7b,original,100,4,83,13
+similo,qwen2.5-coder:1.5b,original,100,18,68,14
+similo,qwen2.5-coder:14b,original,100,82,16,2
+similo,qwen2.5-coder:7b,original,100,59,36,5
+ult,deepseek-coder:6.7b,original,100,4,95,1
+ult,qwen2.5-coder:1.5b,original,100,1,97,2
+ult,qwen2.5-coder:14b,original,100,4,94,2
+ult,qwen2.5-coder:7b,original,100,2,98,0
