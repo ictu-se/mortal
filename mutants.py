@@ -200,4 +200,3 @@ def {func_name}(*args, **kwargs):
             return viable
 
     return viable
-
